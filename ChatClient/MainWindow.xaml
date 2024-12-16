@@ -1,0 +1,65 @@
+﻿<Window x:Class="RedesignedChatClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Чат-додаток" Height="505" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid Background="#F3F3F3" Margin="0,0,0,-58">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Вхід -->
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Background="#0078D7">
+            <TextBox x:Name="UsernameTextBox" Width="200" Margin="5" 
+                     FontSize="16" Padding="10" BorderBrush="#005499" BorderThickness="2" Background="White"/>
+            <Button x:Name="ConnectButton" Content="Підключитися" Click="ConnectButton_Click" 
+                    Background="#005499" Foreground="White" BorderBrush="Transparent" FontSize="16" Width="150" Height="44"/>
+            <TextBlock x:Name="ConnectionStatus" Text="Офлайн" Margin="10,0,0,0" FontSize="16" Foreground="Red" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Чат -->
+        <TabControl x:Name="ChatTabs" Grid.Row="1" Grid.Column="0" Margin="10,10,10,61" 
+                    Background="White" BorderBrush="#0078D7" BorderThickness="2" Padding="10">
+            <TabItem Header="Груповий чат">
+                <StackPanel>
+                    <RichTextBox x:Name="ChatDisplay" IsReadOnly="True" VerticalScrollBarVisibility="Auto"
+             Background="White" BorderBrush="#0078D7" BorderThickness="1" Padding="10"
+             FontSize="14" Height="280"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBox x:Name="MessageTextBox_Group" Width="360" Margin="5" 
+                                 KeyDown="MessageTextBox_KeyDown" 
+                                 FontSize="16" Padding="10" BorderBrush="#0078D7" BorderThickness="2" Background="White" />
+                        <Button x:Name="SendButton_Group" Content="Надіслати" Click="SendButton_Click" Background="#0078D7" Foreground="White" Width="92" Height="43"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Приватні повідомлення">
+                <StackPanel>
+                    <ListBox x:Name="PrivateMessagesList" Background="White" BorderBrush="#0078D7" 
+                             BorderThickness="1" Height="280 " Margin="5" FontSize="14"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="RecipientTextBox" Width="110" 
+                                 FontSize="16" Padding="10" BorderBrush="#0078D7" BorderThickness="2" Background="White" Height="44"/>
+                        <TextBox x:Name="MessageTextBox_Private" Width="273" Margin="5" 
+                                 KeyDown="MessageTextBox_KeyDown"
+                                 FontSize="16" Padding="10" BorderBrush="#0078D7" BorderThickness="2" Background="White"/>
+                        <Button x:Name="SendButton_Private" Content="Надіслати" Click="SendButton_Click" Background="#0078D7" Foreground="White" Width="92" Height="43"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <!-- Список користувачів -->
+        <GroupBox Header="Користувачі онлайн" Grid.Row="1" Grid.Column="1" Margin="10,10,10,91" 
+                  Background="White" BorderBrush="#0078D7" BorderThickness="2">
+            <ListBox x:Name="UserList" Background="White" BorderBrush="#0078D7" FontSize="14" Height="387"/>
+        </GroupBox>
+    </Grid>
+</Window>
