@@ -113,7 +113,7 @@ namespace RedesignedChatClient
                     {
                         _server.SendDirectMessage(message, _username, recipient);
 
-                        AddPrivateMessageToUI(_username, recipient, message, isSender: true);
+                        DisplayPrivateMessage(_username, recipient, message, isSender: true);
 
                         MessageTextBox_Private.Clear();
                     }
@@ -159,11 +159,13 @@ namespace RedesignedChatClient
         // Метод для отримання приватного повідомлення
         public void ReceiveDirectMessage(string message, string sender)
         {
-            Dispatcher.Invoke(() =>
-            {
-                AddPrivateMessageToUI(sender, _username, message, isSender: false);
-                Console.WriteLine($"Отримано приватне повідомлення від {sender}: {message}");
-            });
+            DisplayPrivateMessage(sender, _username, message, isSender: false);
+        }
+
+        // Метод для відображення приватного повідомлення
+        private void DisplayPrivateMessage(string sender, string recipient, string message, bool isSender)
+        {
+            Dispatcher.Invoke(() => AddPrivateMessageToUI(sender, recipient, message, isSender));
         }
 
         // Оновлення списку онлайн користувачів
