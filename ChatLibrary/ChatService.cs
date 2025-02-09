@@ -103,6 +103,8 @@ namespace RedesignedChatLibrary
         private async Task BroadcastMessageAsync(string sender, string message)
         {
             var disconnectedUsers = new ConcurrentBag<string>();
+            var exceptions = new ConcurrentBag<Exception>();
+
             var tasks = _clients.Select(user =>
                 Task.Run(() =>
                 {
@@ -112,7 +114,7 @@ namespace RedesignedChatLibrary
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error sending message to {user.Key}: {ex.Message}");
+                        exceptions.Add(new Exception($"Error sending message to {user.Key}: {ex.Message}"));
                         disconnectedUsers.Add(user.Key);
                     }
                 })).ToList();
@@ -128,6 +130,15 @@ namespace RedesignedChatLibrary
             if (!disconnectedUsers.IsEmpty)
             {
                 await BroadcastUserListAsync();
+            }
+
+            if (!exceptions.IsEmpty)
+            {
+                Console.WriteLine("Errors occurred while broadcasting messages:");
+                foreach (var ex in exceptions)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }
